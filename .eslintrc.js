@@ -19,6 +19,15 @@ const TYPESCRIPT_RULES = {
   '@typescript-eslint/prefer-nullish-coalescing': WARNING,
 }
 
+const COMMON_RULES = {
+  'operator-linebreak': [ERROR, 'before', { overrides: { '=': 'after' } }],
+  'no-return-await': OFF,
+  'comma-dangle': [ERROR, 'always-multiline'],
+  'no-multiple-empty-lines': [ERROR, { max: 8, maxBOF: 1, maxEOF: 0 }],
+  'no-console': OFF,
+  'no-underscore-dangle': [ERROR, { allowAfterThis: true, allowFunctionParams: false }],
+}
+
 
 /** @type {import('eslint').ESLint.Options['baseConfig']} */
 module.exports = {
@@ -31,12 +40,7 @@ module.exports = {
   },
   ignorePatterns: ['src/graphql/**/*'],
   rules: {
-    'operator-linebreak': [ERROR, 'before', { overrides: { '=': 'after' } }],
-    'no-return-await': OFF,
-    'comma-dangle': [ERROR, 'always-multiline'],
-    'no-multiple-empty-lines': [ERROR, { max: 8, maxBOF: 1, maxEOF: 0 }],
-    'no-console': OFF,
-    'no-underscore-dangle': [ERROR, { allowAfterThis: true, allowFunctionParams: false }],
+    ...COMMON_RULES,
   },
   overrides: [
     {
@@ -46,6 +50,7 @@ module.exports = {
         project: './tsconfig.json',
       },
       rules: {
+        ...COMMON_RULES,
         ...TYPESCRIPT_RULES,
       },
     },
