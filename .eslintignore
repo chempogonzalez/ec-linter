@@ -1,0 +1,10 @@
+# don't ever lint node_modules
+node_modules
+# don't lint nextjs build output
+.next
+# don't lint nyc coverage output
+coverage
+
+next-env.d.ts
+
+package.json

@@ -1,0 +1,38 @@
+{
+  "name": "ec-linter",
+  "version": "1.0.0",
+  "description": "Eslint configuration optimized based on 'standard' config with some opinionated configs. Non extra steps needed",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node ./scripts/add-configs-needed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chempogonzalez/ec-linter.git"
+  },
+  "keywords": [],
+  "author": "Chempo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chempogonzalez/ec-linter/issues"
+  },
+  "homepage": "https://github.com/chempogonzalez/ec-linter#readme",
+  "dependencies": {
+    "@types/eslint": "8.4.1",
+    "@typescript-eslint/eslint-plugin": "5.12.0",
+    "@typescript-eslint/parser": "5.12.0",
+    "eslint": "8.9.0",
+    "eslint-config-next": "12.1.0",
+    "eslint-config-standard": "16.0.3",
+    "eslint-config-standard-jsx": "10.0.0",
+    "eslint-config-standard-with-typescript": "21.0.1",
+    "eslint-plugin-import": "2.25.4",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "5.2.0",
+    "eslint-plugin-react": "7.28.0",
+    "fs-extra": "10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.18"
+  }
+}
