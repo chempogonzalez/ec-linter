@@ -1,7 +1,7 @@
 {
   "name": "ec-linter",
   "version": "1.0.0",
-  "description": "Eslint configuration optimized based on 'standard' config with some opinionated configs. Non extra steps needed",
+  "description": "⚡️ Eslint easy configuration setup. Optimized based on 'standard' config with some opinionated configs. Non extra steps needed",
   "main": "index.js",
   "scripts": {
     "postinstall": "node ./scripts/add-configs-needed.js"

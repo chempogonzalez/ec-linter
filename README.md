@@ -1,18 +1,22 @@
 # 🕵🏻‍♂️ ec-linter
-Eslint configuration optimized based on 'standard' config with some opinionated configs. Non extra steps needed
+> ⚡️ Eslint easy configuration setup. Optimized based on 'standard' config with some opinionated configs. Non extra steps needed
 
 ## Features
-- Easy to be ready
+- Just install and that's it
 - No extra steps needed
-- Based on:
-  - js standard config
-  - ts standard config
-  - react & jsx standard config
-  - nextjs config
-  - opinionated rules override
+- **Based on:**
+  - JS standard config
+  - TS standard config
+  - React & JSX standard config
+  - NextJS config
+  - Opinionated rules override
+
+#### 1️⃣ It installs all the packages needed
+#### 2️⃣ Adds an `eslintConfig` section in package.json
+#### 3️⃣ Adds `2 scripts` to the package.json for lint and lint-fix execution
 
 ## Working with
-Prepared to be used within the following languages/frameworks:
+Prepared to be used within projects with the following languages/frameworks:
 
 - JavaScript
 - Typescript
@@ -24,3 +28,5 @@ Prepared to be used within the following languages/frameworks:
 # Install it as a dev dependency
 $npm install -D ec-linter
 ```
+
+
