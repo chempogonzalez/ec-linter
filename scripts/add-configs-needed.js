@@ -36,15 +36,18 @@ try {
     process.exit(0)
   }
 
+
   // check if actual package has different lint config
   const areDifferentLintConfig =
     JSON.stringify({ eslintConfig })
     !== JSON.stringify(LINT_CONFIGS)
 
+
   // check if actual package has different lint config
   const areDifferentLintScripts =
     JSON.stringify(scripts)
     !== JSON.stringify({ ...scripts, ...LINT_SCRIPTS })
+
 
   // if they're different, we're going to rewrite the package.json
   if (areDifferentLintConfig || areDifferentLintScripts) {

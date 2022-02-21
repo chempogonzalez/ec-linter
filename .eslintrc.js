@@ -44,7 +44,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*.+(ts|tsx|astro)'],
+      files: ['**/*.+(ts|tsx)'],
       extends: ['standard-with-typescript', 'standard-jsx', 'next'],
       parserOptions: {
         project: './tsconfig.json',
