@@ -1,30 +1,28 @@
 // @ts-check
-const fse = require('fs-extra')
+const fs = require('fs-extra')
 const { log, displayError } = require('./logs.js')
 
 
 /**
  * Write a file with given content
- * @param  {String} path Path of file to write
- * @param  {String} content Content to write
- * @return {Promise}
+ *
+ * @param {String} path Path of file to write
+ * @param {String} content Content to write
  */
 const writeFile = (path, content) =>
-  fse
-    .outputFile(path, content)
-    .then(() => log(`Created ${path}`))
-    .catch(() => displayError(`Failed creating ${path}`))
+  fs.outputFile(path, content)
+    .then(() => log(`Created ${path} file`))
+    .catch(() => displayError(`Failed creating ${path} file`))
 
 
 /**
- * Remove a file
- * @param  {String} path Path of file to remove
- * @return {Promise}
+ * Removes a file based on path provided
+ *
+ * @param {String} path path of the file to be removed
  */
 const removeFile = path =>
-  fse
-    .remove(path)
-    .then(() => log(`Removed ${path}`))
-    .catch(() => displayError(`Failed removing ${path}`))
+  fs.remove(path)
+    .then(() => log(`Removed ${path} file`))
+    .catch(() => displayError(`Failed removing ${path} file`))
 
 module.exports = { writeFile, removeFile }

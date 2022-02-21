@@ -1,29 +1,33 @@
 // @ts-check
+const { exitExecutionWithSuccess } = require('../helpers/cli')
 const { writeFile } = require('../helpers/file')
 const { log, displayError } = require('../helpers/logs')
 const { name: linterPackageName } = require('../package.json')
+
+
+const LINT_CONFIGS_PATH = `./node_modules/${linterPackageName}/`
+
+const LINT_CONFIGS = {
+  eslintConfig: {
+    extends: [`${LINT_CONFIGS_PATH}.eslintrc.js`],
+  },
+}
+
+const LINT_SCRIPTS = {
+  lint: 'eslint . --ext .js,.jsx,.ts,.tsx',
+  'lint-fix': 'npm run lint -- --fix',
+}
+
 
 try {
   const { CI, INIT_CWD } = process.env
 
   if (CI) {
-    console.log(`CI detected, skipping ${linterPackageName} postinstall`)
-    process.exit(0)
+    console.log(`Skipping ${linterPackageName} postinstall due to CI env was detected`)
+    exitExecutionWithSuccess()
   }
 
   const PROJECT_PACKAGE_PATH = `${INIT_CWD}/package.json`
-  const LINT_CONFIGS_PATH = `./node_modules/${linterPackageName}/`
-
-  const LINT_CONFIGS = {
-    eslintConfig: {
-      extends: [`${LINT_CONFIGS_PATH}.eslintrc.js`],
-    },
-  }
-
-  const LINT_SCRIPTS = {
-    lint: 'eslint . --ext .js,.jsx,.ts,.tsx',
-    'lint-fix': 'npm run lint -- --fix',
-  }
 
   // Get the project's package.json
   const packageJSON = require(PROJECT_PACKAGE_PATH)
@@ -32,25 +36,23 @@ try {
   const { eslintConfig, name, scripts } = packageJSON
 
   // If actual package is the same, avoid the operation (useful when linking the package)
-  if (name === linterPackageName) {
-    process.exit(0)
-  }
+  if (name === linterPackageName) exitExecutionWithSuccess()
 
 
   // check if actual package has different lint config
-  const areDifferentLintConfig =
+  const isDifferentLintConfig =
     JSON.stringify({ eslintConfig })
     !== JSON.stringify(LINT_CONFIGS)
 
 
   // check if actual package has different lint config
-  const areDifferentLintScripts =
+  const isDifferentLintScripts =
     JSON.stringify(scripts)
     !== JSON.stringify({ ...scripts, ...LINT_SCRIPTS })
 
 
   // if they're different, we're going to rewrite the package.json
-  if (areDifferentLintConfig || areDifferentLintScripts) {
+  if (isDifferentLintConfig || isDifferentLintScripts) {
     log(`Adding ${linterPackageName} changes to package.json...`)
 
     // create the new package.json object to be written
