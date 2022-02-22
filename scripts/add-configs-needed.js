@@ -1,21 +1,42 @@
 // @ts-check
-const { exitExecutionWithSuccess } = require('../helpers/cli')
+const { exitExecutionWithSuccess, getSpawnPromise } = require('../helpers/cli')
 const { writeFile } = require('../helpers/file')
-const { log, displayError } = require('../helpers/logs')
+const { log, displayError, logUpdate } = require('../helpers/logs')
 const { name: linterPackageName } = require('../package.json')
 
 
-const LINT_CONFIGS_PATH = `./node_modules/${linterPackageName}/`
+const LINT_CONFIGS_PATH = `./node_modules/${linterPackageName}/configs/`
 
-const LINT_CONFIGS = {
-  eslintConfig: {
-    extends: [`${LINT_CONFIGS_PATH}.eslintrc.js`],
-  },
+const LINT_CONFIG_PATH_SUBFOLDER = {
+  WITH_NEXT: `${LINT_CONFIGS_PATH}with-next/`,
+  WITHOUT_NEXT: `${LINT_CONFIGS_PATH}without-next/`,
 }
 
 const LINT_SCRIPTS = {
   lint: 'eslint . --ext .js,.jsx,.ts,.tsx',
   'lint-fix': 'npm run lint -- --fix',
+}
+
+const installNextJSConfigDependencies = async (isNextJSProject) => {
+  if (!isNextJSProject) return true
+
+  const packageToInstall = 'eslint-config-next'
+
+  try {
+    require(packageToInstall)
+    return true
+  } catch (e) {
+    logUpdate('Installing needed dependencies...')
+    return getSpawnPromise('npm', [
+      'install',
+      '--save-dev',
+      '--no-audit',
+      '--no-fund',
+      packageToInstall,
+    ]).then(() => {
+      logUpdate.done('Installed needed dependencies')
+    })
+  }
 }
 
 
@@ -33,7 +54,19 @@ try {
   const packageJSON = require(PROJECT_PACKAGE_PATH)
 
   // Extract the fields we want to compare
-  const { eslintConfig, name, scripts } = packageJSON
+  const { eslintConfig, name, scripts, dependencies } = packageJSON
+
+  const isNextJSProject = Object.keys(dependencies).includes('next')
+
+  const eslintFinalConfigPath = isNextJSProject
+    ? LINT_CONFIG_PATH_SUBFOLDER.WITH_NEXT
+    : LINT_CONFIG_PATH_SUBFOLDER.WITHOUT_NEXT
+
+  const LINT_CONFIGS = {
+    eslintConfig: {
+      extends: [`${eslintFinalConfigPath}.eslintrc.js`],
+    },
+  }
 
   // If actual package is the same, avoid the operation (useful when linking the package)
   if (name === linterPackageName) exitExecutionWithSuccess()
@@ -69,9 +102,13 @@ try {
     writeFile(
       PROJECT_PACKAGE_PATH,
       JSON.stringify(newPackageJSON, null, 2),
-    ).then(() => console.log(`✅ Added ${linterPackageName} config successfully!`))
+    ).then(() => {
+      installNextJSConfigDependencies(isNextJSProject).then(() => {
+        logUpdate(`✅ Added ${linterPackageName} config successfully!`)
+      })
+    })
   } else {
-    console.log(`🔘 ${linterPackageName} config is already in your package.json. Great!`)
+    logUpdate(`🔘 ${linterPackageName} config is already in your package.json. Great!`)
   }
 } catch (e) {
   displayError(`${linterPackageName} can't update the package.json file.`)

@@ -31,7 +31,12 @@ const COMMON_RULES = {
 
 /** @type {import('eslint').ESLint.Options['baseConfig']} */
 module.exports = {
-  extends: ['standard', 'standard-jsx', 'next'],
+  env: {
+    es6: true,
+    browser: true,
+    node: true,
+  },
+  extends: ['standard', 'standard-jsx'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -45,9 +50,14 @@ module.exports = {
   overrides: [
     {
       files: ['**/*.+(ts|tsx)'],
-      extends: ['standard-with-typescript', 'standard-jsx', 'next'],
+      extends: ['standard-with-typescript', 'standard-jsx'],
       parserOptions: {
         project: './tsconfig.json',
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
+        },
+        warnOnUnsupportedTypeScriptVersion: true,
       },
       rules: {
         ...COMMON_RULES,
