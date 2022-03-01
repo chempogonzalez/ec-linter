@@ -1,6 +1,6 @@
 // @ts-check
 const fs = require('fs-extra')
-const { log, displayError } = require('./logs.js')
+const { log, displayError, logUpdate } = require('./logs.js')
 
 
 /**
@@ -11,7 +11,7 @@ const { log, displayError } = require('./logs.js')
  */
 const writeFile = (path, content) =>
   fs.outputFile(path, content)
-    .then(() => log(`Created ${path} file`))
+    .then(() => logUpdate(`Created ${path} file`))
     .catch(() => displayError(`Failed creating ${path} file`))
 
 

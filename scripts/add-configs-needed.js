@@ -1,7 +1,7 @@
 // @ts-check
 const { exitExecutionWithSuccess, getSpawnPromise } = require('../helpers/cli')
 const { writeFile } = require('../helpers/file')
-const { log, displayError, logUpdate } = require('../helpers/logs')
+const { displayError, logUpdate } = require('../helpers/logs')
 const { name: linterPackageName } = require('../package.json')
 
 
@@ -56,7 +56,7 @@ try {
   // Extract the fields we want to compare
   const { eslintConfig, name, scripts, dependencies } = packageJSON
 
-  const isNextJSProject = Object.keys(dependencies).includes('next')
+  const isNextJSProject = Object.keys(dependencies ?? {}).includes('next')
 
   const eslintFinalConfigPath = isNextJSProject
     ? LINT_CONFIG_PATH_SUBFOLDER.WITH_NEXT
@@ -83,10 +83,9 @@ try {
     JSON.stringify(scripts)
     !== JSON.stringify({ ...scripts, ...LINT_SCRIPTS })
 
-
   // if they're different, we're going to rewrite the package.json
   if (isDifferentLintConfig || isDifferentLintScripts) {
-    log(`Adding ${linterPackageName} changes to package.json...`)
+    logUpdate(`Adding ${linterPackageName} changes to package.json...`)
 
     // create the new package.json object to be written
     const newPackageJSON = {
