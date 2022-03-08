@@ -17,6 +17,9 @@ const LINT_SCRIPTS = {
   'lint-fix': 'npm run lint -- --fix',
 }
 
+const { CI, INIT_CWD } = process.env
+
+
 const installNextJSConfigDependencies = async (isNextJSProject) => {
   if (!isNextJSProject) return true
 
@@ -33,6 +36,7 @@ const installNextJSConfigDependencies = async (isNextJSProject) => {
       '--no-audit',
       '--no-fund',
       packageToInstall,
+      { cwd: INIT_CWD },
     ]).then(() => {
       logUpdate.done('Installed needed dependencies')
     })
@@ -41,8 +45,6 @@ const installNextJSConfigDependencies = async (isNextJSProject) => {
 
 
 try {
-  const { CI, INIT_CWD } = process.env
-
   if (CI) {
     console.log(`Skipping ${linterPackageName} postinstall due to CI env was detected`)
     exitExecutionWithSuccess()
