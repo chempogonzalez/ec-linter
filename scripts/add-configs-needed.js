@@ -1,6 +1,7 @@
 // @ts-check
 const fs = require('fs-extra')
 const path = require('path')
+const merge = require('deepmerge')
 const { exitExecutionWithSuccess, getSpawnPromise } = require('../helpers/cli')
 const { writeFile } = require('../helpers/file')
 const { displayError, log } = require('../helpers/logs')
@@ -133,15 +134,11 @@ async function createExtendableEslintConfig (projectCWD, configPathToBeReplaced)
 
 
 
-function getChangedPackageJSON ({ eslintConfig, scripts, ...restOfPkg }) {
-  return {
-    ...restOfPkg,
-    scripts: {
-      ...scripts,
-      ...LINT_SCRIPTS,
-    },
-    __old_eslintConfig: eslintConfig,
-  }
+function getChangedPackageJSON ({ eslintConfig, ...restOfPkg }) {
+  return merge(
+    { ...restOfPkg, __old_eslintConfig: eslintConfig },
+    { scripts: LINT_SCRIPTS },
+  )
 }
 
 
