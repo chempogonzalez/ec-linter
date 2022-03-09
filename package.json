@@ -1,6 +1,6 @@
 {
   "name": "@chempo/ec-linter",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "⚡️ Eslint easy configuration setup. Optimized based on 'standard' config with some opinionated configs. Non extra steps needed",
   "main": "index.js",
   "scripts": {
