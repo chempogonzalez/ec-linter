@@ -24,8 +24,11 @@ const COMMON_RULES = {
   'no-return-await': OFF,
   'comma-dangle': [ERROR, 'always-multiline'],
   'no-multiple-empty-lines': [ERROR, { max: 8, maxBOF: 1, maxEOF: 0 }],
-  'no-console': OFF,
-  'no-underscore-dangle': [ERROR, { allowAfterThis: true, allowFunctionParams: false }],
+  'no-console': [
+    process.env.NODE_ENV === 'production' ? ERROR : WARNING,
+    { allow: ['warn', 'error'] },
+  ],
+  'no-underscore-dangle': [ERROR, { allowFunctionParams: false }],
 }
 
 
