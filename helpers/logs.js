@@ -16,11 +16,11 @@ logUpdate.done = msg => {
 /**
  * Logs a message in the command line
  *
- * @param {String} msg message to be displayed
+ * @param args all passed arguments
  */
-const log = msg => console.log(msg)
-
-
+function log (...args) {
+  console.log('[@chempo/ec-linter] ', ...args)
+}
 /**
  * Shows an error in the command line and exits process
  *

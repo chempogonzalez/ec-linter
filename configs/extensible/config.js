@@ -14,10 +14,12 @@ const COMMON_RULES = {}
 const TYPESCRIPT_RULES = {}
 
 
+
+
 /** @type {import('eslint').ESLint.Options['baseConfig']} */
 module.exports = {
   // Rules for .js or .jsx files
-  extends: ['./node_modules/@chempo/ec-linter/configs/with-next/.eslintrc.js'],
+  extends: ['{{configPathToExtends}}'],
   rules: {
     ...COMMON_RULES,
   },
