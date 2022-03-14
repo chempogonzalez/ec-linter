@@ -11,11 +11,13 @@
   - NextJS config
   - Opinionated rules ([Rules override](https://github.com/chempogonzalez/ec-linter/blob/main/configs/shared/rules.js))
 
-## 🚀 How it works?
-##### 🟣 `1`  - It installs all the packages needed
-##### 🟣 `2`  - Check if `eslintConfig` or `.eslintrc.js` file exists and rename them if it's needed
-##### 🟣 `3` - Creates an `.eslintrc.js` file to extend the ec-linter rules
-##### 🟣 `4` - Adds `2 scripts` to the package.json for lint and lint-fix execution
+
+## 📦 Installation
+```zsh
+# Install it as a dev dependency
+$npm install -D ec-linter
+```
+
 
 ## 🌀 Working with
 Prepared to be used within projects with the following languages/frameworks:
@@ -25,10 +27,11 @@ Prepared to be used within projects with the following languages/frameworks:
 - **React**
 - **NextJS**
 
-## 📦 Usage
-```zsh
-# Install it as a dev dependency
-$npm install -D ec-linter
-```
+## 🚀 How it works?
+##### 🟣 `1`  - It installs all the packages needed
+##### 🟣 `2`  - Check if `eslintConfig` or `.eslintrc.js` file exists and rename them if it's needed
+##### 🟣 `3` - Creates an `.eslintrc.js` file to extend the ec-linter rules
+##### 🟣 `4` - Adds `2 scripts` to the package.json for lint and lint-fix execution
+
 
 
