@@ -9,7 +9,7 @@
   - TS standard config
   - React & JSX standard config
   - NextJS config
-  - Opinionated rules ([Rules override](https://github.com/chempogonzalez/ec-linter/blob/main/configs/shared/rules.js))
+  - Opinionated rules ([Overwritten Rules](https://github.com/chempogonzalez/ec-linter/blob/main/configs/shared/rules.js))
 
 
 ## 📦 Installation
