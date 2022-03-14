@@ -1,18 +1,6 @@
-const readline = require('readline')
+const ERROR_CODE = 1
 
-const logUpdate = msg => {
-  const blank = '\n'.repeat(process.stdout.rows)
-  console.log(blank)
-  readline.cursorTo(process.stdout, 0, 0)
-  readline.clearScreenDown(process.stdout)
-  console.log(msg)
-}
-
-logUpdate.done = msg => {
-  logUpdate(msg)
-  console.log()
-}
-
+/* eslint-disable no-console */
 /**
  * Logs a message in the command line
  *
@@ -21,6 +9,8 @@ logUpdate.done = msg => {
 function log (...args) {
   console.log('[@chempo/ec-linter] ', ...args)
 }
+
+
 /**
  * Shows an error in the command line and exits process
  *
@@ -28,7 +18,7 @@ function log (...args) {
  */
 const displayError = msg => {
   console.error(`✖ Error: ${msg}\n`)
-  process.exit(1)
+  process.exit(ERROR_CODE)
 }
 
-module.exports = { log, displayError, logUpdate }
+module.exports = { log, displayError }

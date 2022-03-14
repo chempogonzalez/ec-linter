@@ -1,19 +1,20 @@
 // @ts-check
+const merge = require('deepmerge')
 const fs = require('fs-extra')
 const path = require('path')
-const merge = require('deepmerge')
-const { exitExecutionWithSuccess, getSpawnPromise } = require('../helpers/cli')
+
+const { exitExecutionWithSuccess, executeCommand } = require('../helpers/cli')
 const { writeFile } = require('../helpers/file')
 const { displayError, log } = require('../helpers/logs')
 const { name: linterPackageName } = require('../package.json')
 
 
-const STRING_TO_BE_REPLACED = '{{configPathToExtends}}'
-
-const { CI, INIT_CWD } = process.env
-
 
 /* [start] ------------------ CONSTANTS ---------------------------------- */
+const STRING_TO_BE_REPLACED = '{{configPathToExtends}}'
+
+const { CI = false, INIT_CWD } = process.env
+
 const LINT_CONFIGS_PATH = `./node_modules/${linterPackageName}/configs`
 
 const LINT_CONFIG_PATH_SUBFOLDER = {
@@ -44,7 +45,7 @@ const installNextJSConfigDependencies = async (isNextJSProject) => {
   } catch (e) {
     log('Installing needed dependencies...', INIT_CWD)
     // return exec(`npm i --save-dev --no-audit --no-fund ${packageToInstall}`, { cwd: INIT_CWD })
-    return getSpawnPromise('npm', [
+    return executeCommand('npm', [
       'install',
       '--save-dev',
       '--no-audit',
@@ -120,6 +121,8 @@ const hasCurrentlyEslintConfigFile = (projectCWD) => {
     displayError(`${linterPackageName} can't update the package.json file. ${JSON.stringify(e)}`)
   }
 })()
+
+
 
 
 async function createExtendableEslintConfig (projectCWD, configPathToBeReplaced) {
