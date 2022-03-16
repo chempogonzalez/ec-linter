@@ -19,6 +19,8 @@ const TYPESCRIPT_RULES = {
   '@typescript-eslint/no-non-null-assertion': OFF,
   '@typescript-eslint/explicit-function-return-type': WARNING,
   '@typescript-eslint/prefer-nullish-coalescing': WARNING,
+  '@typescript-eslint/consistent-type-imports': [ERROR, { prefer: 'type-imports', disallowTypeAnnotations: true },
+  ],
 }
 
 
